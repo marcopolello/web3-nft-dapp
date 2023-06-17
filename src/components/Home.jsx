@@ -46,21 +46,6 @@ function Home() {
         </div>
       </div>
 
-      <hr />
-      <br />
-
-      <h1>Mint Random NFT</h1>
-      <div className="container">
-        <div className="row">
-          {Array(totalMinted + 1)
-            .fill(0)
-            .map((_, i) => (
-              <div key={i} className="col-sm">
-                <NFTImageRandom tokenId={i} getCount={getCount} />
-              </div>
-            ))}
-        </div>
-      </div>
     </div>
   );
 }
