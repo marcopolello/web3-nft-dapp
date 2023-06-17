@@ -1,4 +1,7 @@
 require("@nomiclabs/hardhat-waffle");
+require('dotenv').config();
+
+const { MATIC_URL, MATIC_PRIVATE_KEY } = process.env;
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -22,9 +25,12 @@ module.exports = {
     artifacts: './src/artifacts',
   },
   networks: {
+    //hardhat: {
+    //  chainId: 31337,
+    //},
     matic: {
-      url: "https://polygon-mumbai.g.alchemy.com/v2/YOUR_APP",
-      accounts: ["MATIC_PRIVATE_KEY"]
+      url: MATIC_URL,
+      accounts: [MATIC_PRIVATE_KEY]
     }
-  },
+  }
 };
