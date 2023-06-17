@@ -23,3 +23,7 @@ npm run dev
 ```
 
 Update the deployed contract address in `components/Home.js` 
+
+
+# per matic network
+npx hardhat run scripts/sample-script.js --network matic

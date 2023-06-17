@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import SpartanPolGuys from '../artifacts/contracts/MyNFT.sol/SpartanPolGuys.json';
 
 //mettere adress locale qui
-const contractAddress = '0x10A1534f567e2e249Ebf5aDb3596e604818F1F50';
+const contractAddress = '0x8563BcfaEE53E1d04D89410f979bCD2BB546c2b8';
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -66,7 +66,7 @@ function Home() {
 }
 
 function NFTImage({ tokenId, getCount }) {
-  const contentId = 'QmTBxFm3SU3pmWQgGzb2ApZe9oMD6amZCAkyVa6HyvMDxB';
+  const contentId = 'QmUVLpjzqUbasp9ptTJr9GAqZ7uaGxve7mungDH9nE1pF9';
   const [isMinted, setIsMinted] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -130,7 +130,7 @@ function NFTImage({ tokenId, getCount }) {
 
 function NFTImageRandom({ tokenId, getCount }) {
   //mettere smart contract in locale
-  const contentId = 'QmTBxFm3SU3pmWQgGzb2ApZe9oMD6amZCAkyVa6HyvMDxB';
+  const contentId = 'QmUVLpjzqUbasp9ptTJr9GAqZ7uaGxve7mungDH9nE1pF9';
   const metadataURI = `${contentId}/${tokenId}.json`;
   const imageURI = `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentId}/${tokenId}.png`;
   //const imageURI = `img/${tokenId}.png`;
