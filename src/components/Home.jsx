@@ -83,7 +83,7 @@ function Home() {
 }
 
 function NFTImage({ tokenId, getCount }) {
-  const contentId = 'QmUVLpjzqUbasp9ptTJr9GAqZ7uaGxve7mungDH9nE1pF9';
+  const contentId = 'QmcRPEjrBqxJTPoSLwPgHjF3XK5N51SNugY38pkJe5GLeh';
   const [isMinted, setIsMinted] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
