@@ -109,8 +109,16 @@ function NFTImage({ tokenId, getCount }) {
       <div className="card-body">
         <h5 className="card-title">ID #{tokenId}</h5>
         <form>
-          <input type="file" name="imageUpload" onChange={handleImageUpload} />
-          <button className="btn btn-primary" type="button" onClick={loadAndMintToken}>Carica immagine</button>
+          {!isMinted ? (
+            <input type="file" name="imageUpload" onChange={handleImageUpload} />
+          ) : (
+            <p>NFT mintato</p>
+          )}
+          {!isMinted ? (
+            <button className="btn btn-primary" type="button" onClick={loadAndMintToken}>Carica immagine</button>
+          ) : (
+            null
+          )}
         </form>
       </div>
     </div>
