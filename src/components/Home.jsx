@@ -6,8 +6,8 @@ import SpartanPolGuys from '../artifacts/contracts/MyNFT.sol/SpartanPolGuys.json
 import RandNFT from '../artifacts/contracts/RandNFT.sol/RandNFT.json';
 
 //mettere adress locale qui
-const contractAddress = '0x8a3aEf8DB1398E2B10786f2a3D6add4a29Fe5a6a'; //spartan
-const randomNFTAddress = '0xBddDcFb811E97b40C3FDa57D2E8102ff8f8c18c1'; //rand
+const contractAddress = '0xd0F4833C18b70Bd1Fc9846C6378216cE70624ea5'; //spartan
+const randomNFTAddress = '0xc54f5fd348993027f5653eAca94aCDf34a83e456'; //rand
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const providerRand = new ethers.providers.Web3Provider(window.ethereum);
@@ -71,9 +71,9 @@ function Home() {
         <div className="row">
           {Array(totalMintedRand + 1)
             .fill(0)
-            .map((_, i) => (
-              <div key={i} className="col-sm">
-                <NFTImageRandom tokenId={i} getCountRandom={getCountRandom} />
+            .map((_, n) => (
+              <div key={n} className="col-sm">
+                <NFTImageRandom tokenIdRand={n} getCountRandom={getCountRandom} />
               </div>
             ))}
         </div>
@@ -145,12 +145,12 @@ function NFTImage({ tokenId, getCount }) {
 }
 
 
-function NFTImageRandom({ tokenId, getCountRandom }) {
+function NFTImageRandom({ tokenIdRand, getCountRandom }) {
   //mettere smart contract in locale
-  const contentId = 'QmUVLpjzqUbasp9ptTJr9GAqZ7uaGxve7mungDH9nE1pF9';
-  const metadataURI = `${contentId}/${tokenId}.json`;
-  const imageURI = `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentId}/${tokenId}.png`;
-  //const imageURI = `img/${tokenId}.png`;
+  const contentIdRand = 'QmUVLpjzqUbasp9ptTJr9GAqZ7uaGxve7mungDH9nE1pF9';
+  const metadataURI = `${contentIdRand}/${tokenIdRand}.json`;
+  const imageURI = `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentIdRand}/${tokenIdRand}.png`;
+  //const imageURI = `img/${tokenIdRand}.png`;
 
   const [isMintedRand, setIsMinted] = useState(false);
   useEffect(() => {
@@ -176,7 +176,7 @@ function NFTImageRandom({ tokenId, getCountRandom }) {
   };
 
   async function getURI() {
-    const uri = await contractRandom.tokenURI(tokenId);
+    const uri = await contractRandom.tokenURI(tokenIdRand);
     alert(uri);
   }
 
@@ -186,7 +186,7 @@ function NFTImageRandom({ tokenId, getCountRandom }) {
     <div className="card" style={{ width: '18rem' }}>
       <img className="card-img-top" src={isMintedRand ? imageURI : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'}></img>
       <div className="card-body">
-        <h5 className="card-title">ID #{tokenId}</h5>
+        <h5 className="card-title">ID #{tokenIdRand}</h5>
         {!isMintedRand ? (
           <button className="btn btn-primary" onClick={mintToken}>
             Mint Random
