@@ -6,14 +6,14 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract FiredGuys is ERC721, ERC721URIStorage, Ownable {
+contract SpartanPolGuys is ERC721, ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
 
     mapping(string => uint8) existingURIs;
 
-    constructor() ERC721("FiredGuys", "FYR") {}
+    constructor() ERC721("SpartanPolGuys", "FYR") {}
 
     function _baseURI() internal pure override returns (string memory) {
         return "ipfs://";
@@ -28,9 +28,13 @@ contract FiredGuys is ERC721, ERC721URIStorage, Ownable {
     }
 
     // The following functions are overrides required by Solidity.
-
     function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
         super._burn(tokenId);
+    }
+
+    // Sovrascrivi la funzione supportsInterface
+    function supportsInterface(bytes4 interfaceId) public view override(ERC721, ERC721URIStorage) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 
     function tokenURI(uint256 tokenId)

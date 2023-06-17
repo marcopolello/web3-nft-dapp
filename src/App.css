@@ -40,3 +40,8 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+.btn-margin-left {
+  margin-left: 5px;
+  /* Aggiungi qui il valore del margine desiderato */
+}

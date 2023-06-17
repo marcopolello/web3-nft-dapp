@@ -2,9 +2,10 @@ import WalletBalance from './WalletBalance';
 import { useEffect, useState } from 'react';
 
 import { ethers } from 'ethers';
-import FiredGuys from '../artifacts/contracts/MyNFT.sol/FiredGuys.json';
+import SpartanPolGuys from '../artifacts/contracts/MyNFT.sol/SpartanPolGuys.json';
 
-const contractAddress = 'YOUR_DEPLOYED_CONTRACT_ADDRESS';
+//mettere adress locale qui
+const contractAddress = '0x10A1534f567e2e249Ebf5aDb3596e604818F1F50';
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -12,7 +13,7 @@ const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
 
 // get the smart contract
-const contract = new ethers.Contract(contractAddress, FiredGuys.abi, signer);
+const contract = new ethers.Contract(contractAddress, SpartanPolGuys.abi, signer);
 
 
 function Home() {
@@ -32,7 +33,7 @@ function Home() {
     <div>
       <WalletBalance />
 
-      <h1>Fired Guys NFT Collection</h1>
+      <h1>Load image and mint NFT</h1>
       <div className="container">
         <div className="row">
           {Array(totalMinted + 1)
@@ -44,15 +45,86 @@ function Home() {
             ))}
         </div>
       </div>
+
+      <hr />
+      <br />
+
+      <h1>Mint Random NFT</h1>
+      <div className="container">
+        <div className="row">
+          {Array(totalMinted + 1)
+            .fill(0)
+            .map((_, i) => (
+              <div key={i} className="col-sm">
+                <NFTImageRandom tokenId={i} getCount={getCount} />
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 }
 
 function NFTImage({ tokenId, getCount }) {
-  const contentId = 'Qmdbpbpy7fA99UkgusTiLhMWzyd3aETeCFrz7NpYaNi6zY';
+  const contentId = 'QmTBxFm3SU3pmWQgGzb2ApZe9oMD6amZCAkyVa6HyvMDxB';
+  const [isMinted, setIsMinted] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    getMintedStatus();
+  }, [isMinted]);
+
+  const getMintedStatus = async () => {
+    const result = await contract.isContentOwned(`${contentId}/${tokenId}.json`);
+    setIsMinted(result);
+  };
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(URL.createObjectURL(file));
+  };
+
+  const loadAndMintToken = async () => {
+    if (!selectedImage) {
+      alert('Carica un\'immagine valida');
+      return;
+    }
+
+    const connection = contract.connect(signer);
+    const addr = connection.address;
+    const metadataURI = `${contentId}/${tokenId}.json`;
+
+    const result = await contract.payToMint(addr, metadataURI, {
+      value: ethers.utils.parseEther('0.05'),
+      nonce: 0
+    });
+
+    await result.wait();
+    getMintedStatus();
+    getCount();
+  };
+
+  return (
+    <div className="card" style={{ width: '18rem' }}>
+      <img className="card-img-top" src={selectedImage || (isMinted ? `img/${tokenId}.png` : 'img/placeholder.png')} alt="NFT" />
+      <div className="card-body">
+        <h5 className="card-title">ID #{tokenId}</h5>
+        <form>
+          <input type="file" name="imageUpload" onChange={handleImageUpload} />
+          <button className="btn btn-primary" type="button" onClick={loadAndMintToken}>Carica immagine</button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+
+function NFTImageRandom({ tokenId, getCount }) {
+  //mettere smart contract in locale
+  const contentId = 'QmTBxFm3SU3pmWQgGzb2ApZe9oMD6amZCAkyVa6HyvMDxB';
   const metadataURI = `${contentId}/${tokenId}.json`;
-  const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId}.png`;
-//   const imageURI = `img/${tokenId}.png`;
+  //const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId}.png`;
+  const imageURI = `img/${tokenId}.png`;
 
   const [isMinted, setIsMinted] = useState(false);
   useEffect(() => {
@@ -70,6 +142,7 @@ function NFTImage({ tokenId, getCount }) {
     const addr = connection.address;
     const result = await contract.payToMint(addr, metadataURI, {
       value: ethers.utils.parseEther('0.05'),
+      nonce: 0
     });
 
     await result.wait();
@@ -88,7 +161,7 @@ function NFTImage({ tokenId, getCount }) {
         <h5 className="card-title">ID #{tokenId}</h5>
         {!isMinted ? (
           <button className="btn btn-primary" onClick={mintToken}>
-            Mint
+            Mint Random
           </button>
         ) : (
           <button className="btn btn-secondary" onClick={getURI}>

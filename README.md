@@ -11,10 +11,10 @@ The demo contains a basic web3 app and smart contract for minting NFTs.
 git clone <this-repo>
 npm install
 
-# terminal 1
+# terminal 1 per far girare Hardhat Runtime Environment
 npx hardhat node
 
-# terminal 2
+# terminal 2 per compilare e creare il network in locale
 npx hardhat compile
 npx hardhat run scripts/sample-script.js --network localhost
 
@@ -22,4 +22,4 @@ npx hardhat run scripts/sample-script.js --network localhost
 npm run dev
 ```
 
-Update the deployed contract address in `compoonents/Home.js` 
+Update the deployed contract address in `components/Home.js` 
