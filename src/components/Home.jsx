@@ -104,25 +104,30 @@ function NFTImage({ tokenId, getCount }) {
   };
 
   return (
-    <div className="card" style={{ width: '18rem' }}>
-      <img className="card-img-top" src={selectedImage || (isMinted ? `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentId}/${tokenId}.png` : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg')} alt="NFT" />
-      <div className="card-body">
-        <h5 className="card-title">ID #{tokenId}</h5>
-        <form>
-          {!isMinted ? (
-            <input type="file" name="imageUpload" onChange={handleImageUpload} />
-          ) : (
-            <p>NFT mintato</p>
-          )}
-          {!isMinted ? (
-            <button className="btn btn-primary" type="button" onClick={loadAndMintToken}>Carica immagine</button>
-          ) : (
-            null
-          )}
-        </form>
-      </div>
+    <div>
+      {!isMinted || (selectedImage && selectedImage.includes('https://gray-inner-lion-689.mypinata.cloud/ipfs/') && selectedImage.includes(`${contentId}/${tokenId}.png`)) ? (
+        <div className="card" style={{ width: '18rem' }}>
+          <img className="card-img-top" src={selectedImage || `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentId}/${tokenId}.png`} alt="NFT" />
+          <div className="card-body">
+            <h5 className="card-title">ID #{tokenId}</h5>
+            <form>
+              {!isMinted ? (
+                <input type="file" name="imageUpload" onChange={handleImageUpload} />
+              ) : (
+                <p>NFT mintato</p>
+              )}
+              {!isMinted ? (
+                <button className="btn btn-primary" type="button" onClick={loadAndMintToken}>Carica immagine</button>
+              ) : (
+                null
+              )}
+            </form>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
+
 }
 
 
