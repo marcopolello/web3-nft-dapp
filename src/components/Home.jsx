@@ -103,6 +103,8 @@ function NFTImage({ tokenId, getCount }) {
     getCount();
   };
 
+  console.log("is minted su caricamento IMG => " + isMinted);
+
   return (
     <div className="card" style={{ width: '18rem' }}>
       <img className="card-img-top" src={selectedImage || (isMinted ? `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentId}/${tokenId}.png` : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg')} alt="NFT" />
@@ -160,6 +162,9 @@ function NFTImageRandom({ tokenId, getCount }) {
     const uri = await contract.tokenURI(tokenId);
     alert(uri);
   }
+
+  console.log("is minted => " + isMinted);
+
   return (
     <div className="card" style={{ width: '18rem' }}>
       <img className="card-img-top" src={isMinted ? imageURI : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'}></img>
