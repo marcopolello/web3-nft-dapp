@@ -105,7 +105,7 @@ function NFTImage({ tokenId, getCount }) {
 
   return (
     <div className="card" style={{ width: '18rem' }}>
-      <img className="card-img-top" src={selectedImage || (isMinted ? `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId}.png` : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg')} alt="NFT" />
+      <img className="card-img-top" src={selectedImage || (isMinted ? `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentId}/${tokenId}.png` : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg')} alt="NFT" />
       <div className="card-body">
         <h5 className="card-title">ID #{tokenId}</h5>
         <form>
@@ -122,7 +122,7 @@ function NFTImageRandom({ tokenId, getCount }) {
   //mettere smart contract in locale
   const contentId = 'QmTBxFm3SU3pmWQgGzb2ApZe9oMD6amZCAkyVa6HyvMDxB';
   const metadataURI = `${contentId}/${tokenId}.json`;
-  const imageURI = `https://gateway.pinata.cloud/ipfs/${contentId}/${tokenId}.png`;
+  const imageURI = `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentId}/${tokenId}.png`;
   //const imageURI = `img/${tokenId}.png`;
 
   const [isMinted, setIsMinted] = useState(false);
