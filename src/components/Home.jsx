@@ -46,6 +46,21 @@ function Home() {
         </div>
       </div>
 
+      <hr />
+      <br />
+
+      <h1>Mint Random NFT</h1>
+      <div className="container">
+        <div className="row">
+          {Array(totalMinted + 1)
+            .fill(0)
+            .map((_, i) => (
+              <div key={i} className="col-sm">
+                <NFTImageRandom tokenId={i} getCount={getCount} />
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -68,23 +83,6 @@ function NFTImage({ tokenId, getCount }) {
     const file = event.target.files[0];
     setSelectedImage(URL.createObjectURL(file));
   };
-
-  const mintToken = async () => {
-    const connection = contract.connect(signer);
-    const addr = connection.address;
-    const result = await contract.payToMint(addr, metadataURI, {
-      value: ethers.utils.parseEther('0.05')
-    });
-
-    await result.wait();
-    getMintedStatus();
-    getCount();
-  };
-
-  async function getURI() {
-    const uri = await contract.tokenURI(tokenId);
-    alert(uri);
-  }
 
   const loadAndMintToken = async () => {
     if (!selectedImage) {
@@ -114,25 +112,73 @@ function NFTImage({ tokenId, getCount }) {
         <h5 className="card-title">ID #{tokenId}</h5>
         <form>
           {!isMinted ? (
-            <input style={{ margin: '2px' }} type="file" name="imageUpload" onChange={handleImageUpload} />
+            <input type="file" name="imageUpload" onChange={handleImageUpload} />
           ) : (
             <p>NFT mintato</p>
           )}
           {!isMinted ? (
-            <button style={{ margin: '2px' }} className="btn btn-primary" type="button" onClick={loadAndMintToken}>Mint NFT</button>
+            <button className="btn btn-primary" type="button" onClick={loadAndMintToken}>Carica immagine</button>
           ) : (
             null
           )}
-          {!isMinted ? (
-            <button style={{ margin: '2px' }} className="btn btn-primary" onClick={mintToken}>
-              Mint Random NFT
-            </button>
-          ) : (
-            <button style={{ margin: '2px' }} className="btn btn-secondary" onClick={getURI}>
-              Taken! Show URI
-            </button>
-          )}
         </form>
+      </div>
+    </div>
+  );
+}
+
+
+function NFTImageRandom({ tokenId, getCount }) {
+  //mettere smart contract in locale
+  const contentId = 'QmUVLpjzqUbasp9ptTJr9GAqZ7uaGxve7mungDH9nE1pF9';
+  const metadataURI = `${contentId}/${tokenId}.json`;
+  const imageURI = `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentId}/${tokenId}.png`;
+  //const imageURI = `img/${tokenId}.png`;
+
+  const [isMinted, setIsMinted] = useState(false);
+  useEffect(() => {
+    getMintedStatus();
+  }, [isMinted]);
+
+  const getMintedStatus = async () => {
+    const result = await contract.isContentOwned(metadataURI);
+    console.log(result)
+    setIsMinted(result);
+  };
+
+  const mintToken = async () => {
+    const connection = contract.connect(signer);
+    const addr = connection.address;
+    const result = await contract.payToMint(addr, metadataURI, {
+      value: ethers.utils.parseEther('0.05')
+    });
+
+    await result.wait();
+    getMintedStatus();
+    getCount();
+  };
+
+  async function getURI() {
+    const uri = await contract.tokenURI(tokenId);
+    alert(uri);
+  }
+
+  console.log("is minted => " + isMinted);
+
+  return (
+    <div className="card" style={{ width: '18rem' }}>
+      <img className="card-img-top" src={isMinted ? imageURI : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'}></img>
+      <div className="card-body">
+        <h5 className="card-title">ID #{tokenId}</h5>
+        {!isMinted ? (
+          <button className="btn btn-primary" onClick={mintToken}>
+            Mint Random
+          </button>
+        ) : (
+          <button className="btn btn-secondary" onClick={getURI}>
+            Taken! Show URI
+          </button>
+        )}
       </div>
     </div>
   );
