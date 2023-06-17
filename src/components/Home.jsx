@@ -31,7 +31,7 @@ function Home() {
 
   const [totalMintedRand, setTotalMintedRand] = useState(0);
   useEffect(() => {
-    getCount();
+    getCountRandom();
   }, []);
 
   const getCount = async () => {
@@ -41,9 +41,9 @@ function Home() {
   };
 
   const getCountRandom = async () => {
-    const count = await contractRandom.count();
-    console.log(parseInt(count));
-    setTotalMintedRand(parseInt(count));
+    const countRand = await contractRandom.count();
+    console.log(parseInt(countRand));
+    setTotalMintedRand(parseInt(countRand));
   };
 
   return (
@@ -145,19 +145,19 @@ function NFTImage({ tokenId, getCount }) {
 }
 
 
-function NFTImageRandom({ tokenId, getCount }) {
+function NFTImageRandom({ tokenId, getCountRandom }) {
   //mettere smart contract in locale
   const contentId = 'QmUVLpjzqUbasp9ptTJr9GAqZ7uaGxve7mungDH9nE1pF9';
   const metadataURI = `${contentId}/${tokenId}.json`;
   const imageURI = `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentId}/${tokenId}.png`;
   //const imageURI = `img/${tokenId}.png`;
 
-  const [isMinted, setIsMinted] = useState(false);
+  const [isMintedRand, setIsMinted] = useState(false);
   useEffect(() => {
-    getMintedStatus();
-  }, [isMinted]);
+    getMintedStatusRandom();
+  }, [isMintedRand]);
 
-  const getMintedStatus = async () => {
+  const getMintedStatusRandom = async () => {
     const result = await contractRandom.isContentOwned(metadataURI);
     console.log(result)
     setIsMinted(result);
@@ -171,8 +171,8 @@ function NFTImageRandom({ tokenId, getCount }) {
     });
 
     await result.wait();
-    getMintedStatus();
-    getCount();
+    getMintedStatusRandom();
+    getCountRandom();
   };
 
   async function getURI() {
@@ -180,14 +180,14 @@ function NFTImageRandom({ tokenId, getCount }) {
     alert(uri);
   }
 
-  console.log("is minted => " + isMinted);
+  console.log("is minted Random => " + isMintedRand);
 
   return (
     <div className="card" style={{ width: '18rem' }}>
-      <img className="card-img-top" src={isMinted ? imageURI : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'}></img>
+      <img className="card-img-top" src={isMintedRand ? imageURI : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'}></img>
       <div className="card-body">
         <h5 className="card-title">ID #{tokenId}</h5>
-        {!isMinted ? (
+        {!isMintedRand ? (
           <button className="btn btn-primary" onClick={mintToken}>
             Mint Random
           </button>
