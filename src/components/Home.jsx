@@ -20,7 +20,7 @@ const signerRandom = providerRand.getSigner();
 const contract = new ethers.Contract(contractAddress, SpartanPolGuys.abi, signer);
 
 //smart contract for random nft
-const contractRandom = new ethers.Contract(randomNFTAddress, RandNFT.abi, signerRand);
+const contractRandom = new ethers.Contract(randomNFTAddress, RandNFT.abi, signerRandom);
 
 function Home() {
 
