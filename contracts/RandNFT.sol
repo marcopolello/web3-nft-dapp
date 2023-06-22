@@ -55,7 +55,7 @@ contract RandNFT is ERC721, ERC721URIStorage, Ownable {
         string memory metadataURI
     ) public payable returns (uint256) {
         require(existingURIs[metadataURI] != 1, 'NFT already minted!');
-        require (msg.value >= 0.05 ether, 'Need to pay up!');
+        require (msg.value >= 0.01 ether, 'Need to pay up!');
 
         uint256 newItemId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
@@ -69,6 +69,15 @@ contract RandNFT is ERC721, ERC721URIStorage, Ownable {
 
     function count() public view returns (uint256) {
         return _tokenIdCounter.current();
+    }
+
+    function addToMetamaskWallet(uint256 tokenId) external {
+        require(_exists(tokenId), "Token does not exist");
+        require(ownerOf(tokenId) == msg.sender, "Not the token owner");
+
+        address wallet = address(uint160(msg.sender));
+        _approve(wallet, tokenId);
+        
     }
 
 

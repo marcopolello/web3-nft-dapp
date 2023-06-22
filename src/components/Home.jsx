@@ -2,43 +2,46 @@ import WalletBalance from './WalletBalance';
 import { useEffect, useState } from 'react';
 
 import { ethers } from 'ethers';
-import SpartanPolGuys from '../artifacts/contracts/MyNFT.sol/SpartanPolGuys.json';
+//import SpartanPolGuys from '../artifacts/contracts/MyNFT.sol/SpartanPolGuys.json';
 import RandNFT from '../artifacts/contracts/RandNFT.sol/RandNFT.json';
+require('dotenv').config();
+
+const { PINATA_CONTENT, SMART_CONTRACT } = process.env;
 
 //mettere adress locale qui
-const contractAddress = '0xd0F4833C18b70Bd1Fc9846C6378216cE70624ea5'; //spartan
-const randomNFTAddress = '0xc54f5fd348993027f5653eAca94aCDf34a83e456'; //rand
+//const contractAddress = '0xd0F4833C18b70Bd1Fc978214ea5'; //spartan
+const randomNFTAddress = SMART_CONTRACT; //rand
 
-const provider = new ethers.providers.Web3Provider(window.ethereum);
+//const provider = new ethers.providers.Web3Provider(window.ethereum);
 const providerRand = new ethers.providers.Web3Provider(window.ethereum);
 
 // get the end user
-const signer = provider.getSigner();
+//const signer = provider.getSigner();
 const signerRandom = providerRand.getSigner();
 
 // get the smart contract
-const contract = new ethers.Contract(contractAddress, SpartanPolGuys.abi, signer);
+//const contract = new ethers.Contract(contractAddress, SpartanPolGuys.abi, signer);
 
 //smart contract for random nft
 const contractRandom = new ethers.Contract(randomNFTAddress, RandNFT.abi, signerRandom);
 
 function Home() {
 
-  const [totalMinted, setTotalMinted] = useState(0);
-  useEffect(() => {
-    getCount();
-  }, []);
+  //const [totalMinted, setTotalMinted] = useState(0);
+  //useEffect(() => {
+  //  getCount();
+  //}, []);
 
   const [totalMintedRand, setTotalMintedRand] = useState(0);
   useEffect(() => {
     getCountRandom();
   }, []);
 
-  const getCount = async () => {
-    const count = await contract.count();
-    console.log(parseInt(count));
-    setTotalMinted(parseInt(count));
-  };
+  //const getCount = async () => {
+  //  const count = await contract.count();
+  //  console.log(parseInt(count));
+  //  setTotalMinted(parseInt(count));
+  //};
 
   const getCountRandom = async () => {
     const countRand = await contractRandom.count();
@@ -49,22 +52,6 @@ function Home() {
   return (
     <div>
       <WalletBalance />
-
-      <h1>Load image and mint NFT</h1>
-      <div className="container">
-        <div className="row">
-          {Array(totalMinted + 1)
-            .fill(0)
-            .map((_, i) => (
-              <div key={i} className="col-sm">
-                <NFTImage tokenId={i} getCount={getCount} />
-              </div>
-            ))}
-        </div>
-      </div>
-
-      <hr />
-      <br />
 
       <h1>Mint Random NFT</h1>
       <div className="container">
@@ -82,6 +69,7 @@ function Home() {
   );
 }
 
+/** 
 function NFTImage({ tokenId, getCount }) {
   const contentId = 'QmcRPEjrBqxJTPoSLwPgHjF3XK5N51SNugY38pkJe5GLeh';
   const [isMinted, setIsMinted] = useState(false);
@@ -112,7 +100,7 @@ function NFTImage({ tokenId, getCount }) {
     const metadataURI = `${contentId}/${tokenId}.json`;
 
     const result = await contract.payToMint(addr, metadataURI, {
-      value: ethers.utils.parseEther('0.05')
+      value: ethers.utils.parseEther('0.01')
     });
 
     await result.wait();
@@ -142,12 +130,12 @@ function NFTImage({ tokenId, getCount }) {
       </div>
     </div>
   );
-}
+} */
 
 
 function NFTImageRandom({ tokenIdRand, getCountRandom }) {
   //mettere smart contract in locale
-  const contentIdRand = 'QmUVLpjzqUbasp9ptTJr9GAqZ7uaGxve7mungDH9nE1pF9';
+  const contentIdRand = PINATA_CONTENT;
   const metadataURI = `${contentIdRand}/${tokenIdRand}.json`;
   const imageURI = `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentIdRand}/${tokenIdRand}.png`;
   //const imageURI = `img/${tokenIdRand}.png`;
@@ -167,10 +155,11 @@ function NFTImageRandom({ tokenIdRand, getCountRandom }) {
     const connection = contractRandom.connect(signerRandom);
     const addr = connection.address;
     const result = await contractRandom.payToMint(addr, metadataURI, {
-      value: ethers.utils.parseEther('0.05')
+      value: ethers.utils.parseEther('0.01')
     });
 
     await result.wait();
+    await contractRandom.addToMetamaskWallet(result);
     getMintedStatusRandom();
     getCountRandom();
   };
@@ -202,3 +191,20 @@ function NFTImageRandom({ tokenIdRand, getCountRandom }) {
 }
 
 export default Home;
+
+/**
+      <h1>Load image and mint NFT</h1>
+      <div className="container">
+        <div className="row">
+          {Array(totalMinted + 1)
+            .fill(0)
+            .map((_, i) => (
+              <div key={i} className="col-sm">
+                <NFTImage tokenId={i} getCount={getCount} />
+              </div>
+            ))}
+        </div>
+      </div>
+
+      <hr />
+      <br /> */
