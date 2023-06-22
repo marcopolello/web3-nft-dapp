@@ -6,20 +6,14 @@ import SpartanPolGuys from '../artifacts/contracts/MyNFT.sol/SpartanPolGuys.json
 
 //mettere adress locale qui
 const contractAddress = '0xc2C4D0867034140F12E7841fbFBa9eB69AaCB6bD'; //spartan
-//const randomNFTAddress = '0xBddDcFb811E97b40C3FDa57D2E8102ff8f8c18c1'; //rand
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
-//const providerRand = new ethers.providers.Web3Provider(window.ethereum);
 
 // get the end user
 const signer = provider.getSigner();
-//const signerRandom = providerRand.getSigner();
 
 // get the smart contract
 const contract = new ethers.Contract(contractAddress, SpartanPolGuys.abi, signer);
-
-//smart contract for random nft
-//const contractRandom = new ethers.Contract(randomNFTAddress, RandNFT.abi, signerRand);
 
 function Home() {
 
@@ -67,15 +61,15 @@ function NFTImage({ tokenId, getCount }) {
   }, [isMinted]);
 
   const getMintedStatus = async () => {
-    const result = await contractRandom.isContentOwned(metadataURI);
+    const result = await contract.isContentOwned(metadataURI);
     console.log(result)
     setIsMinted(result);
   };
 
   const mintToken = async () => {
-    const connection = contractRandom.connect(signerRandom);
+    const connection = contract.connect(signer);
     const addr = connection.address;
-    const result = await contractRandom.payToMint(addr, metadataURI, {
+    const result = await contract.payToMint(addr, metadataURI, {
       value: ethers.utils.parseEther('0.05')
     });
 
@@ -85,7 +79,7 @@ function NFTImage({ tokenId, getCount }) {
   };
 
   async function getURI() {
-    const uri = await contractRandom.tokenURI(tokenId);
+    const uri = await contract.tokenURI(tokenId);
     alert(uri);
   }
 
