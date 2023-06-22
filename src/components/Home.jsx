@@ -4,16 +4,15 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 //import SpartanPolGuys from '../artifacts/contracts/MyNFT.sol/SpartanPolGuys.json';
 import RandNFT from '../artifacts/contracts/RandNFT.sol/RandNFT.json';
-import dotenv from 'dotenv';
+//import dotenv from 'dotenv';
 
 
-dotenv.config();
+//dotenv.config();
 
-const { PINATA_CONTENT, SMART_CONTRACT } = process.env;
+//const { PINATA_CONTENT, SMART_CONTRACT } = process.env;
 
 //mettere adress locale qui
-//const contractAddress = '0xd0F4833C18b70Bd1Fc978214ea5'; //spartan
-const randomNFTAddress = SMART_CONTRACT; //rand
+const randomNFTAddress = "0x5CE82DefE6C9a7d25Db339BC025E261e92545bb3"; //rand
 
 //const provider = new ethers.providers.Web3Provider(window.ethereum);
 const providerRand = new ethers.providers.Web3Provider(window.ethereum);
@@ -138,7 +137,7 @@ function NFTImage({ tokenId, getCount }) {
 
 function NFTImageRandom({ tokenIdRand, getCountRandom }) {
   //mettere smart contract in locale
-  const contentIdRand = PINATA_CONTENT;
+  const contentIdRand = "QmUVLpjzqUbasp9ptTJr9GAqZ7uaGxve7mungDH9nE1pF9";
   const metadataURI = `${contentIdRand}/${tokenIdRand}.json`;
   const imageURI = `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentIdRand}/${tokenIdRand}.png`;
   //const imageURI = `img/${tokenIdRand}.png`;
