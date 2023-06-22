@@ -14,19 +14,19 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  //const SpartanPolGuys = await hre.ethers.getContractFactory("SpartanPolGuys");
-  //const spartanPolGuys = await SpartanPolGuys.deploy();
-
-  //await spartanPolGuys.deployed();
-
-  //console.log("SpartanPolGuys NFT deployed to:", spartanPolGuys.address);
-
-  const RandNFT = await hre.ethers.getContractFactory("RandNFT");
-  const randNFT = await RandNFT.deploy();
+  const SpartanPolGuys = await hre.ethers.getContractFactory("SpartanPolGuys");
+  const spartanPolGuys = await SpartanPolGuys.deploy();
 
   await spartanPolGuys.deployed();
 
-  console.log("RandNFT NFT deployed to:", randNFT.address);
+  //console.log("SpartanPolGuys NFT deployed to:", spartanPolGuys.address);
+
+  //const RandNFT = await hre.ethers.getContractFactory("RandNFT");
+  //const randNFT = await RandNFT.deploy();
+
+  //await spartanPolGuys.deployed();
+
+  //console.log("RandNFT NFT deployed to:", randNFT.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
