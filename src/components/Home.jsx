@@ -161,7 +161,7 @@ function NFTImageRandom({ tokenIdRand, getCountRandom }) {
     });
 
     await result.wait();
-    await contractRandom.addToMetamaskWallet(result);
+    //await contractRandom.addToMetamaskWallet(result);
     getMintedStatusRandom();
     getCountRandom();
   };
