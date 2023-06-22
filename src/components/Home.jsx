@@ -7,10 +7,9 @@ import RandNFT from '../artifacts/contracts/RandNFT.sol/RandNFT.json';
 import dotenv from 'dotenv';
 
 
-const process = dotenv.config();
+dotenv.config();
 
-const PINATA_CONTENT = process.env.PINATA_CONTENT;
-const SMART_CONTRACT = process.env.SMART_CONTRACT;
+const { PINATA_CONTENT, SMART_CONTRACT } = process.env;
 
 //mettere adress locale qui
 //const contractAddress = '0xd0F4833C18b70Bd1Fc978214ea5'; //spartan
