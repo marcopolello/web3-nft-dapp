@@ -7,7 +7,7 @@ import RandNFT from '../artifacts/contracts/RandNFT.sol/RandNFT.json';
 import dotenv from 'dotenv';
 
 
-dotenv.config();
+const process = dotenv.config();
 
 const PINATA_CONTENT = process.env.PINATA_CONTENT;
 const SMART_CONTRACT = process.env.SMART_CONTRACT;
