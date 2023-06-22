@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 //import SpartanPolGuys from '../artifacts/contracts/MyNFT.sol/SpartanPolGuys.json';
 import RandNFT from '../artifacts/contracts/RandNFT.sol/RandNFT.json';
-require('dotenv').config();
+import dotenv from 'dotenv';
+
+
+dotenv.config();
 
 const { PINATA_CONTENT, SMART_CONTRACT } = process.env;
 
