@@ -36,7 +36,7 @@ function Home() {
 
   const [totalMintedRand, setTotalMintedRand] = useState(0);
   useEffect(() => {
-    getCountRandom();
+    getCount();
   }, []);
 
   //const getCount = async () => {
@@ -46,9 +46,9 @@ function Home() {
   //};
 
   const getCountRandom = async () => {
-    const countRand = await contractRandom.count();
-    console.log(parseInt(countRand));
-    setTotalMintedRand(parseInt(countRand));
+    const count = await contractRandom.count();
+    console.log(parseInt(count));
+    setTotalMintedRand(parseInt(count));
   };
 
   return (
@@ -135,19 +135,23 @@ function NFTImage({ tokenId, getCount }) {
 } */
 
 
+<<<<<<< HEAD
 function NFTImageRandom({ tokenIdRand, getCountRandom }) {
+=======
+function NFTImageRandom({ tokenId, getCount }) {
+>>>>>>> parent of 2269b3f... fix conteggio
   //mettere smart contract in locale
   const contentIdRand = "QmUVLpjzqUbasp9ptTJr9GAqZ7uaGxve7mungDH9nE1pF9";
   const metadataURI = `${contentIdRand}/${tokenIdRand}.json`;
   const imageURI = `https://gray-inner-lion-689.mypinata.cloud/ipfs/${contentIdRand}/${tokenIdRand}.png`;
   //const imageURI = `img/${tokenIdRand}.png`;
 
-  const [isMintedRand, setIsMinted] = useState(false);
+  const [isMinted, setIsMinted] = useState(false);
   useEffect(() => {
-    getMintedStatusRandom();
-  }, [isMintedRand]);
+    getMintedStatus();
+  }, [isMinted]);
 
-  const getMintedStatusRandom = async () => {
+  const getMintedStatus = async () => {
     const result = await contractRandom.isContentOwned(metadataURI);
     console.log(result)
     setIsMinted(result);
@@ -161,9 +165,14 @@ function NFTImageRandom({ tokenIdRand, getCountRandom }) {
     });
 
     await result.wait();
+<<<<<<< HEAD
     //await contractRandom.addToMetamaskWallet(result);
     getMintedStatusRandom();
     getCountRandom();
+=======
+    getMintedStatus();
+    getCount();
+>>>>>>> parent of 2269b3f... fix conteggio
   };
 
   async function getURI() {
@@ -171,14 +180,19 @@ function NFTImageRandom({ tokenIdRand, getCountRandom }) {
     alert(uri);
   }
 
-  console.log("is minted Random => " + isMintedRand);
+  console.log("is minted => " + isMinted);
 
   return (
     <div className="card" style={{ width: '18rem' }}>
-      <img className="card-img-top" src={isMintedRand ? imageURI : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'}></img>
+      <img className="card-img-top" src={isMinted ? imageURI : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'}></img>
       <div className="card-body">
+<<<<<<< HEAD
         <h5 className="card-title">ID #{tokenIdRand}</h5>
         {!isMintedRand ? (
+=======
+        <h5 className="card-title">ID #{tokenId}</h5>
+        {!isMinted ? (
+>>>>>>> parent of 2269b3f... fix conteggio
           <button className="btn btn-primary" onClick={mintToken}>
             Mint Random
           </button>
