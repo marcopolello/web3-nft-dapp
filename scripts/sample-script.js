@@ -19,14 +19,6 @@ async function main() {
 
   await spartanPolGuys.deployed();
 
-  //console.log("SpartanPolGuys NFT deployed to:", spartanPolGuys.address);
-
-  //const RandNFT = await hre.ethers.getContractFactory("RandNFT");
-  //const randNFT = await RandNFT.deploy();
-
-  //await spartanPolGuys.deployed();
-
-  //console.log("RandNFT NFT deployed to:", randNFT.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
