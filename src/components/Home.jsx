@@ -70,7 +70,7 @@ function NFTImage({ tokenId, getCount }) {
     const connection = contract.connect(signer);
     const addr = connection.address;
     const result = await contract.payToMint(addr, metadataURI, {
-      value: ethers.utils.parseEther('0.05')
+      value: ethers.utils.parseEther('0.01')
     });
 
     await result.wait();
